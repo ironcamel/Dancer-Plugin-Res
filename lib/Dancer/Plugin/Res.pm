@@ -2,8 +2,7 @@ package Dancer::Plugin::Res;
 
 # VERSION
 
-use strict;
-use warnings;
+use Dancer ':syntax';
 use Dancer::Plugin;
 
 register res => sub {
