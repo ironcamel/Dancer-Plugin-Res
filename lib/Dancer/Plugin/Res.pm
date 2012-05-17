@@ -23,13 +23,13 @@ register_plugin;
         return res 400 => to_json { err => 'name is required' }
             unless param 'name';
         # ...
-        return to_json { widget => $widget };
+        return res 201 => to_json { widget => $widget };
     };
     dance;
 
 =head1 DESCRIPTION
 
-This L<Dancer> plugin provides the keyword C<res()>, which stand for response.
+This L<Dancer> plugin provides the keyword C<res()>, which stands for response.
 It allows you to set the response and return a body in one shot.
 
     return res 400, { msg => reason };

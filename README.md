@@ -17,7 +17,7 @@ This plugin imports the function `res()`.
         return res 400 => to_json { err => 'name is required' }
             unless param 'name';
         # ...
-        return to_json { widget => $widget };
+        return res 201, to_json { widget => $widget };
     };
     dance;
 
