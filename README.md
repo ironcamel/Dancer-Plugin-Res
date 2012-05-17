@@ -1,6 +1,9 @@
 # DESCRIPTION
 
-Syntax sugar for setting the status and returning a response.
+
+A [Dancer](https://metacpan.org/module/Dancer) plugin that provides syntax
+sugar for setting the status and returning a response in one shot.
+This plugin imports the function `res()`.
 
 # INSTALLATION
 
@@ -11,9 +14,10 @@ Syntax sugar for setting the status and returning a response.
     use Dancer;
     use Dancer::Plugin::Res;
     post '/widgets' => sub {
-        return res 400 => 'Sorry, name param is required' unless param 'name';
+        return res 400 => to_json { err => 'name is required' }
+            unless param 'name';
         # ...
-        return template 'widgets';
+        return to_json { widget => $widget };
     };
     dance;
 

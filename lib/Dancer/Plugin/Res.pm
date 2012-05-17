@@ -20,18 +20,34 @@ register_plugin;
     use Dancer;
     use Dancer::Plugin::Res;
     post '/widgets' => sub {
-        return res 400 => 'Sorry, name param is required'
+        return res 400 => to_json { err => 'name is required' }
             unless param 'name';
+        # ...
+        return to_json { widget => $widget };
     };
     dance;
 
 =head1 DESCRIPTION
 
 This L<Dancer> plugin provides the keyword C<res()>, which stand for response.
-Calling C<return res 400, 'reason'> in a route is equivalent to:
+It allows you to set the response and return a body in one shot.
+
+    return res 400, { msg => reason };
+
+is equivalent to:
 
     status 400;
-    return 'reason';
+    return { msg => reason };
+
+I made this plugin because I wanted a function like L<send_error()>
+for ReST applications that return things like json instead of html.
+C<send_error "reason ...", 500> will not always render the first argument
+you give it in the response.
+When your app is running in production mode, it will attempt to render
+a generic 500.html page.
+Which is great for front-end things,
+but not for back-end code where you always want your application to render the
+thing that you told it to render.
 
 =cut
 
